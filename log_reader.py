@@ -2,7 +2,7 @@
 import os
 import re
 
-LOG_DIR = '/Users/jeffvaleo/Desktop/tu'
+LOG_DIR = '/Users/jeffvaleo/Desktop/tu/log-parser/logs/'
 
 def process_log():
     """
@@ -12,8 +12,10 @@ def process_log():
     """
     storage_array = {}
     for log in os.listdir(LOG_DIR):
+        log_path = os.path.join(LOG_DIR, log)
         if log.endswith('.log'):
-            with open(log) as log_file: # Maybe use readline to read into mem
+            print('Starting log {0}'.format(log))
+            with open(log_path) as log_file: # Maybe use readline to read into mem
                 for line in log_file:
                     try:
                         timestamp = re.findall(r"\d{2}/\w{3}/\d{4}:\d{2}:\d{2}:\d{2}", line)[0]
@@ -27,9 +29,11 @@ def process_log():
                             storage_array[dict_key] = response_count
                         else:
                             storage_array[dict_key] = 1
+    print storage_array
     return storage_array
 
 def write_to_csv(array):
+    print 'starting csv'
     out_file= 'somefile.csv' # TODO
     with open(out_file, 'w') as file:
         file.write('timestamp,response_code,count\n') # Write header

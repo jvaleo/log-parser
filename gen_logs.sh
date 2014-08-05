@@ -1,4 +1,5 @@
 #!/bin/bash
+# Script that will create 1000 (identical) log files with a random number of response codes per minute
 
 if [ ! -d logs/ ]; then
     mkdir logs
@@ -16,7 +17,7 @@ for STATUS_CODE in `cat status_codes.txt`; do
         TIME_STAMP=04/Aug/2014:${HOUR}:${MINUTE}:${SECOND}
         COUNT=`echo $RANDOM % 100 + 1 | bc`
         for j in `seq 1 ${COUNT}`; do
-            echo "23.65.150.10 - - [${TIME_STAMP}] \"POST /wordpress3/wp-admin/admin-ajax.php HTTP/1.1\" ${STATUS_CODE} 2 \"http://www.example.com/wordpress3/wp-admin/post-new.php\" \"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.25 Safari/534.3\"" >> $MASTER_LOG
+            echo "23.65.150.10 - - [${TIME_STAMP} +0000] \"POST /wordpress3/wp-admin/admin-ajax.php HTTP/1.1\" ${STATUS_CODE} 2 \"http://www.example.com/wordpress3/wp-admin/post-new.php\" \"Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.25 Safari/534.3\"" >> $MASTER_LOG
         done
     done
 done
