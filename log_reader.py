@@ -1,4 +1,12 @@
 #!/usr/bin/python
+
+
+"""
+Script to read in web server logs from LOG_DIR and count the occurances of each response code
+per minute. Output the results to a csv in 'timestamp,response_code,count' format
+"""
+
+from datetime import datetime
 import os
 import re
 
@@ -14,7 +22,7 @@ def process_log():
     for log in os.listdir(LOG_DIR):
         log_path = os.path.join(LOG_DIR, log)
         if log.endswith('.log'):
-            print('Starting log {0}'.format(log))
+            print('Processing Log: {0}'.format(log))
             with open(log_path) as log_file: # Maybe use readline to read into mem
                 for line in log_file:
                     try:
@@ -33,8 +41,13 @@ def process_log():
     return storage_array
 
 def write_to_csv(array):
-    print 'starting csv'
-    out_file= 'somefile.csv' # TODO
+    """
+    Take in a dict, split the date & time from the status code out of the key then
+    write to a CSV
+    """
+    print 'Writing To CSV'
+    today = datetime.now().date()
+    out_file= today + '.out'
     with open(out_file, 'w') as file:
         file.write('timestamp,response_code,count\n') # Write header
         for key, value in array.iteritems():
@@ -45,6 +58,7 @@ def write_to_csv(array):
         file.close()
 
 
-storage_array = process_log()
-write_to_csv(storage_array)
+if __name__ == '__main__':
+    storage_array = process_log()
+    write_to_csv(storage_array)
 
