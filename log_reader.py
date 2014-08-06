@@ -10,6 +10,7 @@ from datetime import datetime
 import os
 import re
 
+# TODO Make LOG_DIR a command line param
 LOG_DIR = '/Users/jeffvaleo/Desktop/tu/log-parser/logs/'
 
 def process_log():
