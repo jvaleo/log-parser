@@ -37,7 +37,6 @@ def process_log():
                             storage_array[dict_key] = response_count
                         else:
                             storage_array[dict_key] = 1
-    print storage_array
     return storage_array
 
 def write_to_csv(array):
@@ -46,7 +45,7 @@ def write_to_csv(array):
     write to a CSV
     """
     print 'Writing To CSV'
-    today = datetime.now().date()
+    today = str(datetime.now().date())
     out_file= today + '.out'
     with open(out_file, 'w') as file:
         file.write('timestamp,response_code,count\n') # Write header
@@ -56,7 +55,7 @@ def write_to_csv(array):
             count = value
             file.write('{0},{1},{2}\n'.format(time_stamp,response_code,count)) # Not using csv as this is a lighter-weight solution
         file.close()
-
+        print('CSV Output Complete @ {0}'.format(out_file))
 
 if __name__ == '__main__':
     storage_array = process_log()
